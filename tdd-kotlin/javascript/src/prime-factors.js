@@ -1,5 +1,5 @@
 function getPrimeFactorsFor(number) {
-    return [];
+    return [2];
 }
 
 export { getPrimeFactorsFor };
