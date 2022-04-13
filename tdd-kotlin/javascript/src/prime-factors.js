@@ -1,7 +1,9 @@
 function getPrimeFactorsFor(number) {
-    let factors = [2];
-    if (number / 2 > 1) {
-        factors.push(2);
+    let factor = 2;
+    let factors = [factor];
+    let remainder = number / factor;
+    if (remainder > 1) {
+        factors.push(factor);
     }
     return factors;
 }
