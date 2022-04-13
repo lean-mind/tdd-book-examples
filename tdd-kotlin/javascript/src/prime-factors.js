@@ -4,10 +4,10 @@ function getPrimeFactorsFor(number) {
         ++factor;
     }
     let remainder = number / factor;
-    if (remainder > 1) {
-        return [factor].concat(getPrimeFactorsFor(remainder));
+    if (remainder <= 1) {
+        return [factor];
     }
-    return [factor];
+    return [factor].concat(getPrimeFactorsFor(remainder));
 }
 
 export { getPrimeFactorsFor };
