@@ -1,13 +1,18 @@
 function getPrimeFactorsFor(number) {
+    let prime = findSmallestPrime(number);
+    let remainder = number / prime;
+    if (remainder <= 1) {
+        return [prime];
+    }
+    return [prime].concat(getPrimeFactorsFor(remainder));
+}
+
+function findSmallestPrime(number) {
     let factor = 2;
     while (number % factor != 0) {
         ++factor;
     }
-    let remainder = number / factor;
-    if (remainder <= 1) {
-        return [factor];
-    }
-    return [factor].concat(getPrimeFactorsFor(remainder));
+    return factor;
 }
 
 export { getPrimeFactorsFor };
