@@ -3,7 +3,7 @@ function getPrimeFactorsFor(number) {
     let factors = [factor];
     let remainder = number / factor;
     if (remainder > 1) {
-        factors.push(factor);
+        factors = factors.concat(getPrimeFactorsFor(remainder));
     }
     return factors;
 }
