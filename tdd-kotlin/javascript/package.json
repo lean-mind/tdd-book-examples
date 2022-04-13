@@ -1,15 +1,24 @@
 {
   "name": "javascript",
+  "author": "Kevin Hierro",
   "version": "1.0.0",
-  "description": "tdd-book-examples",
+  "type": "module",
+  "description": "tdd-book-examples-javascript",
   "directories": {
+    "src": "src",
     "test": "test"
   },
   "scripts": {
-    "test": "jest --watchAll --verbose"
+    "test": "jest --watchAll --verbose",
+    "clear-jest": "jest --clearCache"
   },
-  "author": "Kevin Hierro",
   "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "babel-jest": "^27.5.1",
+    "babel-polyfill": "^6.26.0",
     "jest": "^27.5.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
