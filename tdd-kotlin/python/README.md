@@ -29,3 +29,15 @@ Run tests with coverage:
 ```bash
 pipenv run pytest --cov
 ```
+
+## Linter
+
+Autopep
+```bash
+pipenv run autopep8 -i -r ./
+```
+
+Flake
+```bash
+pipenv run flake8 ./
+```
