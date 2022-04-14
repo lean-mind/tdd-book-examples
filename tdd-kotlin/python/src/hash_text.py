@@ -2,4 +2,4 @@ import hashlib
 
 
 def hash(text: str) -> str:
-    return hashlib.sha256(text.encode()).hexdigest()[0:10]
+    return hashlib.sha256(text.encode()).hexdigest()

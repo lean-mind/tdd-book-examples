@@ -18,4 +18,5 @@ def test_hash_is_different_for_each_input(text1, text2):
 
 @given(text())
 def test_hash_has_always_the_same_fixed_length(text):
-    assert_that(len(hash(text))).is_equal_to(10)
+    sha_256_length = 64
+    assert_that(len(hash(text))).is_equal_to(sha_256_length)
