@@ -1,5 +1,8 @@
 # Python examples
 
+## Capitulo 2
+- `hash`
+
 ## Setup project
 
 ### [Setup python guide](https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-windows-10)
