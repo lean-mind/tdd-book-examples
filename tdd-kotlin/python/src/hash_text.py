@@ -1,9 +1,5 @@
-import random
+import hashlib
 
 
 def hash_given(text: str) -> str:
-    if len(text) < 10:
-        hash = text + str(random.random())
-        return hash[0:10]
-    else:
-        return text[0:10]
+    return hashlib.sha256(text.encode()).hexdigest()[0:10]
