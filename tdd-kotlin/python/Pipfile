@@ -13,6 +13,7 @@ mypy = "*"
 pytest = "*"
 pytest-cov = "*"
 assertpy = "*"
+hypothesis = "*"
 
 [requires]
 python_version = "3.10"
