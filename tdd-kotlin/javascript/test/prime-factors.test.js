@@ -13,6 +13,6 @@ it("orders the prime factors from the smallest to the biggest", () => {
     expect(getPrimeFactorsFor(5 * 7 * 11 * 3)).toEqual([3, 5, 7, 11]);
 });
 
-it("knows that the first prime is number 1", () => {
+it("knows that prime numbers start with 2", () => {
     expect(getPrimeFactorsFor(1)).toEqual([1]);
 });
