@@ -8,12 +8,15 @@ class CsvFilter {
         val fields = invoice.split(',')
         val ivaFieldIndex = 4
         val igicFieldIndex = 5
+        val ivaField = fields[ivaFieldIndex]
+        val igicField = fields[igicFieldIndex]
+        val decimalRegex = "\\d+(\\.\\d+)?".toRegex()
         val taxFieldsAreMutuallyExclusive =
-            (fields[ivaFieldIndex].isEmpty() ||
-                fields[igicFieldIndex].isEmpty()) &&
-                (!(fields[ivaFieldIndex].isEmpty()
-                    && fields[igicFieldIndex].isEmpty()))
-        if (taxFieldsAreMutuallyExclusive){
+            (ivaField.matches(decimalRegex) ||
+                igicField.matches(decimalRegex)) &&
+                (!(ivaField.matches(decimalRegex)
+                    && igicField.matches(decimalRegex)))
+        if (taxFieldsAreMutuallyExclusive) {
             result.add(lines[1])
         }
         return result.toList()
