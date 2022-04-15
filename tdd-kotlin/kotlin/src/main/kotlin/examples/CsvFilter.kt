@@ -6,9 +6,14 @@ class CsvFilter {
         result.add(lines[0])
         val invoice = lines[1]
         val fields = invoice.split(',')
-        if ((fields[4].isEmpty() || fields[5].isEmpty()) &&
-            (!(fields[4].isEmpty() && fields[5].isEmpty()))
-        ) {
+        val ivaFieldIndex = 4
+        val igicFieldIndex = 5
+        val taxFieldsAreMutuallyExclusive =
+            (fields[ivaFieldIndex].isEmpty() ||
+                fields[igicFieldIndex].isEmpty()) &&
+                (!(fields[ivaFieldIndex].isEmpty()
+                    && fields[igicFieldIndex].isEmpty()))
+        if (taxFieldsAreMutuallyExclusive){
             result.add(lines[1])
         }
         return result.toList()
