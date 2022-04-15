@@ -13,4 +13,14 @@ class CsvFilterShould {
 
         assertThat(result).isEqualTo(listOf(headerLine, invoiceLine))
     }
+
+    @Test
+    fun exclude_lines_with_both_tax_fields_populated_as_they_are_exclusive() {
+        val headerLine = "Num_factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente"
+        val invoiceLine = "1,02/05/2019,1000,810,19,8,ACER Laptop,B76430134,"
+
+        val result = CsvFilter().filter(listOf(headerLine, invoiceLine))
+
+        assertThat(result).isEqualTo(listOf(headerLine))
+    }
 }
