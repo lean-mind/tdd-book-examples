@@ -12,11 +12,9 @@ class CsvFilter {
         val igicField = fields[igicFieldIndex]
         val decimalRegex = "\\d+(\\.\\d+)?".toRegex()
         val taxFieldsAreMutuallyExclusive =
-            (ivaField.matches(decimalRegex) ||
-                igicField.matches(decimalRegex)) &&
-                (!(ivaField.matches(decimalRegex)
-                    && igicField.matches(decimalRegex)))
-        if (taxFieldsAreMutuallyExclusive) {
+            (ivaField.matches(decimalRegex) || igicField.matches(decimalRegex)) &&
+                (ivaField.isEmpty() || igicField.isEmpty())
+        if (taxFieldsAreMutuallyExclusive){
             result.add(lines[1])
         }
         return result.toList()
