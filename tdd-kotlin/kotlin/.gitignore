@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 # Intellij IDEA
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
