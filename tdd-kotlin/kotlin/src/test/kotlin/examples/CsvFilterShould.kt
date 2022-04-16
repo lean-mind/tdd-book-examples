@@ -1,53 +1,86 @@
 package examples
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class CsvFilterShould {
-    val headerLine = "Num_factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente"
+    private val headerLine = "Num_factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente"
+    lateinit var filter: CsvFilter
+    private val emptyDataFile = listOf(headerLine)
+    private val emptyField = ""
+
+    @BeforeEach
+    fun setup() {
+        filter = CsvFilter()
+    }
 
     @Test
     fun allow_for_correct_lines_only() {
-        val invoiceLine = "1,02/05/2019,1000,810,19,,ACER Laptop,B76430134,"
+        val lines = fileWithOneInvoiceLineHaving(concept = "a correct line with irrelevant data")
+        val result = filter.apply(lines)
 
-        val result = CsvFilter().filter(listOf(headerLine, invoiceLine))
-
-        assertThat(result).isEqualTo(listOf(headerLine, invoiceLine))
+        assertThat(result).isEqualTo(lines)
     }
 
     @Test
     fun exclude_lines_with_both_tax_fields_populated_as_they_are_exclusive() {
-        val invoiceLine = "1,02/05/2019,1000,810,19,8,ACER Laptop,B76430134,"
+        val result = filter.apply(
+            fileWithOneInvoiceLineHaving(ivaTax = "19", igicTax = "8")
+        )
 
-        val result = CsvFilter().filter(listOf(headerLine, invoiceLine))
-
-        assertThat(result).isEqualTo(listOf(headerLine))
+        assertThat(result).isEqualTo(emptyDataFile)
     }
 
     @Test
     fun exclude_lines_with_both_tax_fields_empty_as_one_is_required() {
-        val invoiceLine = "1,02/05/2019,1000,810,,,ACER Laptop,B76430134,"
+        val result = filter.apply(
+            fileWithOneInvoiceLineHaving(ivaTax = emptyField, igicTax = emptyField)
+        )
 
-        val result = CsvFilter().filter(listOf(headerLine, invoiceLine))
-
-        assertThat(result).isEqualTo(listOf(headerLine))
+        assertThat(result).isEqualTo(emptyDataFile)
     }
 
     @Test
     fun exclude_lines_with_non_decimal_tax_fields() {
-        val invoiceLine = "1,02/05/2019,1000,810,XYZ,,ACER Laptop,B76430134,"
+        val result = filter.apply(
+            fileWithOneInvoiceLineHaving(ivaTax = "XYZ")
+        )
 
-        val result = CsvFilter().filter(listOf(headerLine, invoiceLine))
-
-        assertThat(result).isEqualTo(listOf(headerLine))
+        assertThat(result).isEqualTo(emptyDataFile)
     }
 
     @Test
     fun exclude_lines_with_both_tax_fields_populated_even_if_non_decimal() {
-        val invoiceLine = "1,02/05/2019,1000,810,XYZ,12,ACER Laptop,B76430134,"
+        val result = filter.apply(
+            fileWithOneInvoiceLineHaving(ivaTax = "XYZ", igicTax = "12")
+        )
 
-        val result = CsvFilter().filter(listOf(headerLine, invoiceLine))
+        assertThat(result).isEqualTo(emptyDataFile)
+    }
 
-        assertThat(result).isEqualTo(listOf(headerLine))
+    private fun fileWithOneInvoiceLineHaving(
+        ivaTax: String = "19",
+        igicTax: String = emptyField,
+        concept: String = "irrelevant"
+    ): List<String> {
+        val invoiceId = "1"
+        val invoiceDate = "02/05/2019"
+        val grossAmount = "1000"
+        val netAmount = "810"
+        val cif = "B76430134"
+        val nif = emptyField
+        val formattedLine = listOf(
+            invoiceId,
+            invoiceDate,
+            grossAmount,
+            netAmount,
+            ivaTax,
+            igicTax,
+            concept,
+            cif,
+            nif
+        ).joinToString(",")
+        return listOf(headerLine, formattedLine)
     }
 }
