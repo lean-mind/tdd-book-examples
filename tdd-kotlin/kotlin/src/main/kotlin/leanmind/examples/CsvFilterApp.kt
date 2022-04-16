@@ -30,8 +30,7 @@ class CsvFilterApp {
     @ResponseBody
     fun showResult(@RequestPart("file") file: MultipartFile): String {
         val lines = file.inputStream.reader().readLines()
-        val csvFilter = CsvFilter()
-        val filteredResult = csvFilter.apply(lines)
+        val filteredResult = CsvFilter().apply(lines)
         return filteredResult.joinToString(separator = ",")
     }
 }
