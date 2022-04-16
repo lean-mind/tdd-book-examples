@@ -8,6 +8,7 @@
 
 - `CsvFilter` refactor
 - `ListMatchers` better Assertions
+- `ArchiveAssert`
 
 ## Troubleshooting
 
