@@ -8,8 +8,14 @@ import org.junit.jupiter.api.Test
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.mock.web.MockMultipartFile
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import java.io.File
 import java.io.IOException
 import java.io.PrintWriter
@@ -18,28 +24,23 @@ import java.io.PrintWriter
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT
 )
+@AutoConfigureMockMvc
 class CsvFilterAppShould {
-    @Value("\${chrome.path}")
-    lateinit var chromePath: String
-    lateinit var driver: WebDriver
+    @Autowired
+    lateinit var mvc: MockMvc
 
     val filepath = System.getProperty("java.io.tmpdir") + File.separator + "invoices.csv"
     lateinit var csvFile: File
 
+
     @BeforeEach
     fun setUp() {
-        System.setProperty(
-            "webdriver.chrome.driver",
-            chromePath
-        )
-        driver = ChromeDriver()
         csvFile = File(filepath)
     }
 
     @AfterEach
     fun tearDown() {
         csvFile.delete()
-        driver.close()
     }
 
     @Test
@@ -50,50 +51,30 @@ class CsvFilterAppShould {
             "2,03/12/2019,1000,2000,19,8,Lenovo Laptop,,78544372A"
         )
         createCsv(lines)
-        login()
-        selectFile()
-        submitForm()
-
-        assertThat(driver.pageSource).contains(lines[0])
-        assertThat(driver.pageSource).contains(lines[1])
-        assertThat(driver.pageSource).doesNotContain(lines[2])
+        val pageSource = mvc.perform(
+            MockMvcRequestBuilders.multipart(
+                Configuration.webUrl + "/csvform"
+            )
+                .file(
+                    MockMultipartFile(
+                        "file", filepath,
+                        "text/plain",
+                        csvFile.inputStream()
+                    )
+                )
+        ).andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn().response.contentAsString
+        assertThat(pageSource).contains(lines[0])
+        assertThat(pageSource).contains(lines[1])
+        assertThat(pageSource).doesNotContain(lines[2])
     }
 
-    private fun submitForm() {
-        driver.findElement(By.id("submit")).click()
-    }
-
-    private fun selectFile() {
-        driver.get(Configuration.webUrl + "/csvform")
-        val input = driver.findElement(By.id("file"))
-        input.sendKeys(filepath)
-    }
 
     private fun createCsv(lines: List<String>) {
-        try {
-            val printWriter = PrintWriter(filepath)
-            for (line in lines) {
-                printWriter.println(line)
+        csvFile.printWriter().use { out ->
+            lines.forEach {
+                out.println(it)
             }
-            printWriter.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
-    }
-
-    private fun login(
-        username: String = Configuration.username,
-        password: String = Configuration.password
-    ) {
-        driver.get(Configuration.webUrl + Configuration.loginUrl)
-        driver.findElement(By.name("username"))?.sendKeys(username)
-        driver.findElement(By.name("password"))?.sendKeys(password)
-        driver.findElement(By.cssSelector("button[type='submit']"))?.click()
-
-        assertThat(driver.currentUrl)
-            .isNotEqualTo(
-                Configuration.webUrl +
-                    Configuration.loginUrl + "?error"
-            )
     }
 }
