@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 
 class CsvFilterShould {
     private val headerLine = "Num_factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente"
-    lateinit var filter: CsvFilter
+    private lateinit var filter: CsvFilter
     private val emptyDataFile = listOf(headerLine)
     private val emptyField = ""
 
