@@ -29,10 +29,7 @@ class CsvFilterApp {
     @PostMapping("/csvform")
     @ResponseBody
     fun showResult(@RequestPart("file") file: MultipartFile): String {
-        val lines: MutableList<String> = ArrayList()
-        file.inputStream.bufferedReader().forEachLine {
-            lines.add(it)
-        }
+        val lines = file.inputStream.reader().readLines()
         val csvFilter = CsvFilter()
         val filteredResult = csvFilter.apply(lines)
         return filteredResult.joinToString(separator = ",")
