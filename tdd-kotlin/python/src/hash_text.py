@@ -1,5 +1,5 @@
 import hashlib
 
 
-def hash(text: str) -> str:
+def calculate_hash(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
