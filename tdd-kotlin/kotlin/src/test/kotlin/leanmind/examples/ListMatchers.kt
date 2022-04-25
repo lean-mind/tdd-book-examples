@@ -9,10 +9,10 @@ fun assertThatList(list: List<Number>): ListMatchers {
     return ListMatchers(list)
 }
 
-class ListMatchers(private val givenList: List<Number>) {
+class ListMatchers(private val actual: List<Number>) {
 
-    fun isExactly(vararg numbers: Number) {
-        assertThat(numbers).hasSize(givenList.size).hasSameElementsAs(givenList)
+    fun isExactly(vararg expected: Number) {
+        assertThat(expected).hasSize(actual.size).hasSameElementsAs(actual)
     }
 }
 
