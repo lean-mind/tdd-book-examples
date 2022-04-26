@@ -7,3 +7,6 @@
 
 - `getPrimeFactorsFor(number)`
 - `toCamelCase(text)`
+
+## Capitulo 4
+- `isStrongPassword(text)`
