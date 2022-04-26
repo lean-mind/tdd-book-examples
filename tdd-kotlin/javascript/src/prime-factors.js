@@ -1,6 +1,4 @@
 function getPrimeFactorsFor(number) {
-    if (number < 2) return [number];
-
     let prime = findSmallestPrime(number);
     let remainder = number / prime;
     if (remainder <= 1) return [prime];
@@ -9,6 +7,9 @@ function getPrimeFactorsFor(number) {
 }
 
 function findSmallestPrime(number) {
+    if (number == 1) {
+        return 1;
+    }
     let factor = 2;
     while (number % factor != 0) {
         ++factor;
