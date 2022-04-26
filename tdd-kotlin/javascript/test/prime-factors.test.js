@@ -16,3 +16,7 @@ it("orders the prime factors from the smallest to the biggest", () => {
 it("knows that prime numbers start with 2", () => {
     expect(getPrimeFactorsFor(1)).toEqual([1]);
 });
+
+it("only accepts positive numbers", () => {
+    expect(() => getPrimeFactorsFor(-5)).toThrow();
+});
