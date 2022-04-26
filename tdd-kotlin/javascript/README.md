@@ -6,3 +6,4 @@
 ## Capitulo 3
 
 - `getPrimeFactorsFor(number)`
+- `toCamelCase(text)`
