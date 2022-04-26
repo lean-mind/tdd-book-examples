@@ -1,5 +1,5 @@
 function isStrongPassword(password) {
-    return true;
+    return password.length >= 6;
 }
 
 export { isStrongPassword };
