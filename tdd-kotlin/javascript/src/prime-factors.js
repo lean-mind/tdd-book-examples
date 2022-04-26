@@ -1,4 +1,7 @@
 function getPrimeFactorsFor(number) {
+    if (number < 1) {
+        throw new Error("Only positive numbers are allowed");
+    }
     let prime = findSmallestPrime(number);
     let remainder = number / prime;
     if (remainder <= 1) return [prime];
