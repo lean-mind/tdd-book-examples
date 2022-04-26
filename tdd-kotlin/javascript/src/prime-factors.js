@@ -1,23 +1,32 @@
 function getPrimeFactorsFor(number) {
-    if (number < 1) {
-        throw new Error("Only positive numbers are allowed");
-    }
-    let prime = findSmallestPrime(number);
-    let remainder = number / prime;
-    if (remainder <= 1) return [prime];
+    checkForPositiveNumber(number);
+    return primeFactors(number);
 
-    return [prime].concat(getPrimeFactorsFor(remainder));
-}
+    function checkForPositiveNumber(number) {
+        if (number < 1) {
+            throw new Error("Only positive numbers are allowed");
+        }
+    }
 
-function findSmallestPrime(number) {
-    if (number == 1) {
-        return 1;
+    function primeFactors(positiveNumber) {
+        let prime = findSmallestPrime(positiveNumber);
+        let remainder = positiveNumber / prime;
+        if (remainder <= 1) {
+            return [prime];
+        }
+        return [prime].concat(primeFactors(remainder));
     }
-    let factor = 2;
-    while (number % factor != 0) {
-        ++factor;
+
+    function findSmallestPrime(number) {
+        if (number === 1) {
+            return 1;
+        }
+        let factor = 2;
+        while (number % factor !== 0) {
+            ++factor;
+        }
+        return factor;
     }
-    return factor;
 }
 
 export { getPrimeFactorsFor };
