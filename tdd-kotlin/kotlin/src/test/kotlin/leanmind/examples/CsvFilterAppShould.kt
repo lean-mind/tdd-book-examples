@@ -29,7 +29,9 @@ class CsvFilterAppShould {
     @Autowired
     lateinit var mvc: MockMvc
 
-    val filepath = System.getProperty("java.io.tmpdir") + File.separator + "invoices.csv"
+    val filepath = System.getProperty("java.io.tmpdir") +
+        File.separator +
+        "invoices.csv"
     lateinit var csvFile: File
 
 
