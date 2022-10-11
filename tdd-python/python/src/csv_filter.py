@@ -14,10 +14,10 @@ class CsvFilter:
         ivaField = fields[ivaFieldIndex]
         igicField = fields[igicFieldIndex]
         decimalRegex = re.compile("\\d+(\\.\\d+)?")
-        taxFieldsAreMutuallyExclusive = (decimalRegex.match(ivaField)
-                                         or decimalRegex.match(igicField))\
-            and not (decimalRegex.match(ivaField)
-                     and decimalRegex.match(igicField))
+        taxFieldsAreMutuallyExclusive = (
+            decimalRegex.match(ivaField)
+            or decimalRegex.match(igicField)
+        ) and (not ivaField or not igicField)
         if taxFieldsAreMutuallyExclusive:
             result.append(invoice)
         return result
