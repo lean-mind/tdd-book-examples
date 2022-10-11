@@ -1,8 +1,0 @@
-.idea/
-.vscode/
-.pytest_cache/
-.coverage
-__pycache__/
-*.py[cod]
-*$py.class
-.hypothesis/

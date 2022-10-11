@@ -5,6 +5,6 @@ TDD Book examples in various language's.
 
 ## Structure of the examples
 
-## tdd-kotlin
+## tdd-python
 
-All examples with different language's of the original book in 2020 are here.
+All examples with python as main language of the original book in 2020 are here.
