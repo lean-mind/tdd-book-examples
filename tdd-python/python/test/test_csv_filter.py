@@ -19,3 +19,11 @@ class CsvFilterShould(TestCase):
         result = CsvFilter().filter([headerLine, invoiceLine])
 
         assert_that(result).is_equal_to([headerLine])
+
+    def test_exclude_lines_with_both_tax_fields_empty_as_one_is_required(self):
+        headerLine = "Num_factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente"
+        invoiceLine = "1,02/05/2019,1000,810,,,ACER Laptop,B76430134,"
+
+        result = CsvFilter().filter([headerLine, invoiceLine])
+
+        assert_that(result).is_equal_to([headerLine])
