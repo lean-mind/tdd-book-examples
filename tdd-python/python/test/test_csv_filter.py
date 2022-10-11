@@ -36,3 +36,10 @@ class CsvFilterShould(TestCase):
         result = CsvFilter().filter([self.headerLine, invoiceLine])
         
         assert_that(result).is_equal_to([self.headerLine])
+        
+    def test_exclude_lines_with_both_tax_fields_populated_even_if_non_decimal(self):
+        invoiceLine = "1,02/05/2019,1000,810,XYZ,12,ACER Laptop,B76430134,"
+        
+        result = CsvFilter().filter([self.headerLine, invoiceLine])
+        
+        assert_that(result).is_equal_to([self.headerLine])
