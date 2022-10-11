@@ -8,7 +8,7 @@ class CsvFilter:
         result.append(lines[0])
         invoice = lines[1]
         fields = [field for field in invoice.split(',')]
-        if not fields[4] or not fields[5]:
+        if (not fields[4] or not fields[5])\
+                and not (not fields[4] and not fields[5]):
             result.append(invoice)
         return result
-
