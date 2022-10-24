@@ -4,7 +4,7 @@ from typing import List
 
 class CsvFilter:
 
-    def filter(self, lines: List[str]) -> List[str]:
+    def apply(self, lines: List[str]) -> List[str]:
         result = []
         result.append(lines[0])
         invoice = lines[1]
