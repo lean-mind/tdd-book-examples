@@ -1,5 +1,6 @@
 from unittest import TestCase
 from assertpy import assert_that
+from test.fixtures.diagnoses_builder import CasesWithDiagnoses
 
 
 class TestDiagnosesExample(TestCase):
@@ -8,59 +9,6 @@ class TestDiagnosesExample(TestCase):
 
     def setUp(self) -> None:
         # some other initialization code goes around here...*
-        cases = [
-            {
-                "id": 1,
-                "patientName": "Chupito",
-                "diagnosisId": 1,
-                "diagnosisName": "Calicivirus",
-                "publicNotes": [{"id": 1, "content": "public"}],
-                "privateNotes": [{"id": 2, "content": "private"}],
-            },
-            {
-                "id": 2,
-                "patientName": "Juliana",
-                "diagnosisId": 2,
-                "diagnosisName": "Epilepsia",
-                "publicNotes": [],
-                "privateNotes": [],
-            },
-            {
-                "id": 3,
-                "patientName": "Dinwell",
-                "diagnosisId": 3,
-                "diagnosisName": "Otitis",
-                "publicNotes": [],
-                "privateNotes": [],
-            }
-        ]
-        diagnoses = [
-            {
-                "id": 1,
-                "name": "Calicivirus",
-                "location": "Vías Respiratorias Altas",
-                "system": "Respiratorio",
-                "origin": "Virus",
-                "specie": "Gato",
-            },
-            {
-                "id": 2,
-                "name": "Epilepsia",
-                "location": "Cerebro",
-                "system": "Neurológico",
-                "origin": "Idiopatico",
-                "specie": "Perro, Gato",
-            },
-            {
-                "id": 3,
-                "name": "Otitis",
-                "location": "Oídos",
-                "system": "Auditivo",
-                "origin": "Bacteria",
-                "specie": "Perro, Gato",
-            },
-        ]
-        self.renderComponentWith(cases, diagnoses)
         return super().setUp()
 
     # ...
@@ -68,24 +16,42 @@ class TestDiagnosesExample(TestCase):
     # ...
 
     def test_filters_cases_when_several_diagnosis_filters_are_applied_together(self):
-        self.simulateClickOnFilterCheckbox("Cerebro")
-        self.simulateClickOnFilterCheckbox("Vías Respiratorias Altas")
+        search_criterion_1 = "Cerebro"
+        search_criterion_2 = "Vías Respiratorias Altas"
+        discarded_location = "irrelevant"
+        fixtures = (
+            CasesWithDiagnoses()
+            .having_diagnosis_with_location(search_criterion_1)
+            .having_diagnosis_with_location(search_criterion_2)
+            .having_diagnosis_with_location(discarded_location)
+            .build()
+        )
+        self.render_component_with(fixtures.cases(), fixtures.diagnoses())
 
-        table = self.waitForCasesTableToUpdateResults()
-        assert_that(table).does_not_contain("Dinwell")
-        assert_that(table).contains("Chupito")
-        assert_that(table).contains("Juliana")
+        self.simulate_click_on_filter_checkbox(search_criterion_1)
+        self.simulate_click_on_filter_checkbox(search_criterion_2)
+
+        table = self.wait_for_cases_table_to_update_results()
+        assert_that(table).does_not_contain(
+            fixtures.patient_name_given_diagnosis_location(discarded_location)
+        )
+        assert_that(table).contains(
+            fixtures.patient_name_given_diagnosis_location(search_criterion_1)
+        )
+        assert_that(table).contains(
+            fixtures.patient_name_given_diagnosis_location(search_criterion_2)
+        )
 
     @staticmethod
-    def renderComponentWith(cases, diagnoses) -> None:
+    def render_component_with(cases, diagnoses) -> None:
         pass
 
     @staticmethod
-    def simulateClickOnFilterCheckbox(checkbox_name) -> None:
+    def simulate_click_on_filter_checkbox(checkbox_name) -> None:
         pass
 
     @staticmethod
-    def waitForCasesTableToUpdateResults() -> str:
+    def wait_for_cases_table_to_update_results() -> str:
         table_content = """
         <table>
             <tr>
@@ -98,5 +64,4 @@ class TestDiagnosesExample(TestCase):
             </tr>
         </table>
         """
-        
         return table_content
