@@ -1,90 +1,64 @@
+import random
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
 class CasesWithDiagnoses:
-    cases_to_use = []
-    diagnoses_to_use = []
-    _matched_diagnoses = []
-    _matched_cases = []
+    _diagnoses: list[dict]
+    _cases: list[dict]
 
-    def __init__(self) -> None:
-        self.cases_to_use = [
-            {
-                "id": 1,
-                "patientName": "Chupito",
-                "diagnosisId": 1,
-                "diagnosisName": "Calicivirus",
-                "publicNotes": [{"id": 1, "content": "public"}],
-                "privateNotes": [{"id": 2, "content": "private"}],
-            },
-            {
-                "id": 2,
-                "patientName": "Juliana",
-                "diagnosisId": 2,
-                "diagnosisName": "Epilepsia",
-                "publicNotes": [],
-                "privateNotes": [],
-            },
-            {
-                "id": 3,
-                "patientName": "Dinwell",
-                "diagnosisId": 3,
-                "diagnosisName": "Otitis",
-                "publicNotes": [],
-                "privateNotes": [],
-            }
-        ]
-        self.diagnoses_to_use = [
-            {
-                "id": 1,
-                "name": "Calicivirus",
-                "location": "Vías Respiratorias Altas",
-                "system": "Respiratorio",
-                "origin": "Virus",
-                "specie": "Gato",
-            },
-            {
-                "id": 2,
-                "name": "Epilepsia",
-                "location": "Cerebro",
-                "system": "Neurológico",
-                "origin": "Idiopatico",
-                "specie": "Perro, Gato",
-            },
-            {
-                "id": 3,
-                "name": "Otitis",
-                "location": "Oídos",
-                "system": "Auditivo",
-                "origin": "Bacteria",
-                "specie": "Perro, Gato",
-            },
-        ]
+    def patient_name_given_diagnosis_location(self, location_name: str) -> str:
+        diagnostic_id = [d for d in self._diagnoses if d.get(
+            'location') == location_name][0].get('id')
+        associated_case = [c for c in self._cases if c.get(
+            'diagnostic_id') == diagnostic_id][0]
+        return associated_case.get('patient_name', 'name_not_found')
 
-    def having_diagnosis_with_location(self, search_criteria: str):
-        matched_diagnoses = [
-            d for d in self.diagnoses_to_use if d['location'] == search_criteria]
-        if len(matched_diagnoses) > 0:
-            self._matched_diagnoses.append(matched_diagnoses[0])
-            id_of_diagnostic = matched_diagnoses[0]['id']
-            matched_cases = [
-                c for c in self.cases_to_use if c['id'] == id_of_diagnostic]
-            self._matched_cases.append(matched_cases[0])
+    def cases(self) -> list[dict]:
+        return self._cases
+
+    def diagnoses(self) -> list[dict]:
+        return self._diagnoses
+
+
+class CasesWithDiagnosesBuilder:
+    _id = 0
+    _cases = []
+    _diagnoses = []
+
+    def having_diagnosis_with_location(self, location_name: str):
+        self._add(location_name)
         return self
 
-    def build(self):
-        self.cases_to_use = self._matched_cases
-        self.diagnoses_to_use = self._matched_diagnoses
-        return self
+    def build(self) -> CasesWithDiagnoses:
+        return CasesWithDiagnoses(self._diagnoses, self._cases)
 
-    def cases(self) -> list:
-        return self.cases_to_use
+    def _add(self, location_name: str) -> None:
+        self._id += 1
+        diagnostic = self._diagnostic_with_location(self._id, location_name)
+        random_patient_name = f"Patient {random.randint(0, 10)}"
+        case = self._case_with_diagnostic(random_patient_name, diagnostic, self._id)
+        self._cases.append(case)
+        self._diagnoses.append(diagnostic)
 
-    def diagnoses(self) -> list:
-        return self.diagnoses_to_use
+    @staticmethod
+    def _diagnostic_with_location(id: int, location_name: str) -> dict:
+        return {
+            "id": id,
+            "name": "irrelevant_name",
+            "location": location_name,
+            "system": "irrelevant_system",
+            "origin": "irrelevant_origin",
+            "specie": "irrelevant_specie"
+        }
 
-    def patient_name_given_diagnosis_location(self, search_location: str) -> str:
-        matched_diagnoses = [
-            d for d in self.diagnoses_to_use if d['location'] == search_location]
-        if len(matched_diagnoses) > 0:
-            client_names = [c
-                           for c in self.cases_to_use if c['id'] == matched_diagnoses[0]['id']]
-            return client_names[0]['patientName']
-        return "unknown_client_name"
+    @staticmethod
+    def _case_with_diagnostic(patient_name: str, diagnostic: dict, id: int) -> dict:
+        return {
+            "id": id,
+            "patient_name": patient_name,
+            "diagnostic_id": diagnostic.get('id'),
+            "diagnostic_name": diagnostic.get('name'),
+            "public_notes": [],
+            "private_notes": []
+        }

@@ -1,9 +1,11 @@
 from unittest import TestCase
 from assertpy import assert_that
-from test.fixtures.diagnoses_builder import CasesWithDiagnoses
+from test.fixtures.diagnoses_builder import CasesWithDiagnosesBuilder, CasesWithDiagnoses
 
 
 class TestDiagnosesExample(TestCase):
+    _component_content = ''
+    _table_content = ''
     cases = []
     diagnoses = []
 
@@ -20,7 +22,7 @@ class TestDiagnosesExample(TestCase):
         search_criterion_2 = "Vías Respiratorias Altas"
         discarded_location = "irrelevant"
         fixtures = (
-            CasesWithDiagnoses()
+            CasesWithDiagnosesBuilder()
             .having_diagnosis_with_location(search_criterion_1)
             .having_diagnosis_with_location(search_criterion_2)
             .having_diagnosis_with_location(discarded_location)
@@ -42,26 +44,16 @@ class TestDiagnosesExample(TestCase):
             fixtures.patient_name_given_diagnosis_location(search_criterion_2)
         )
 
-    @staticmethod
-    def render_component_with(cases, diagnoses) -> None:
-        pass
+    def render_component_with(self, cases: list[dict], diagnoses: list[dict]) -> None:
+        table_content = []
+        for c, d in zip(cases, diagnoses):
+            table_content.append(f"{d.get('location')}:{c.get('patient_name')}")
+        self._component_content = ",".join(table_content)
 
-    @staticmethod
-    def simulate_click_on_filter_checkbox(checkbox_name) -> None:
-        pass
+    def simulate_click_on_filter_checkbox(self, search_criteria: str) -> None:
+        component_values = self._component_content.split(",")
+        self._table_content += "".join(
+            [c for c in component_values if search_criteria in c])
 
-    @staticmethod
-    def wait_for_cases_table_to_update_results() -> str:
-        table_content = """
-        <table>
-            <tr>
-                <td>
-                    Chupito
-                </td>
-                <td>
-                    Juliana
-                </td>
-            </tr>
-        </table>
-        """
-        return table_content
+    def wait_for_cases_table_to_update_results(self) -> str:
+        return self._table_content
