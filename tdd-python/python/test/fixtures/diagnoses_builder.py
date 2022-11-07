@@ -36,7 +36,7 @@ class CasesWithDiagnosesBuilder:
     def _add(self, location_name: str) -> None:
         self._id += 1
         diagnostic = self._diagnostic_with_location(self._id, location_name)
-        random_patient_name = f"Patient {random.randint(0, 10)}"
+        random_patient_name = f"Patient {random.randint(0, 10000)}"
         case = self._case_with_diagnostic(random_patient_name, diagnostic, self._id)
         self._cases.append(case)
         self._diagnoses.append(diagnostic)
