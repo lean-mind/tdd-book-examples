@@ -1,6 +1,6 @@
 from unittest import TestCase
 from assertpy import assert_that
-from test.fixtures.diagnoses_builder import CasesWithDiagnosesBuilder, CasesWithDiagnoses
+from test.fixtures.diagnoses_builder import CasesWithDiagnosesBuilder
 
 
 class TestDiagnosesExample(TestCase):
