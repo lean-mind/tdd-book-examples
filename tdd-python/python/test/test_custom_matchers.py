@@ -3,12 +3,16 @@ from dataclasses import dataclass
 from assertpy import assert_that, fail
 
 # The object we want to compare
+
+
 @dataclass
 class Archive:
     file_name: str
     content: str
 
 # Assertion implementation
+
+
 def is_equivalent_to(self, actual: Archive):
     if self.val.file_name != actual.file_name:
         raise Exception(
@@ -17,6 +21,7 @@ def is_equivalent_to(self, actual: Archive):
         raise Exception(
             f"Archive content is different. Expected {self.val.file_name} but was {actual.file_name}")
     return self
+
 
 add_extension(is_equivalent_to)
 
