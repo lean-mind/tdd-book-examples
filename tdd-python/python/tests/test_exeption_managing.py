@@ -15,6 +15,7 @@ class Filter:
     def apply(file: File):
         assert_that(file.content).is_not_empty()
 
+
 class TestFilter:
     empty_file = File("", "")
     filter = Filter()
