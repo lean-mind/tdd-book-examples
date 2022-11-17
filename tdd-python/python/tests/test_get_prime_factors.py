@@ -2,13 +2,18 @@ from assertpy import assert_that
 
 
 def get_prime_factors_for(number: int) -> list[int]:
-    factor = 2
-    while number % factor != 0:
-        factor += 1
+    factor = find_smallest_prime(number)
     reminder = number / factor
     if reminder <= 1:
         return [factor]
     return [*[factor], *get_prime_factors_for(reminder)]
+
+
+def find_smallest_prime(number: int) -> int:
+    factor = 2
+    while number % factor != 0:
+        factor += 1
+    return factor
 
 
 def test_knows_what_is_a_primer_number():
