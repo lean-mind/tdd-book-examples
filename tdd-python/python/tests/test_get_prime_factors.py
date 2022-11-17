@@ -2,16 +2,24 @@ from assertpy import assert_that
 
 
 def get_prime_factors_for(number: int) -> list[int]:
-    if number < 1:
-        raise Exception("Only positive numbers are allowed")
-    factor = find_smallest_prime(number)
-    reminder = number / factor
+    _check_if_it_is_positive(number)
+    return _prime_factors(number)
+
+
+def _prime_factors(positive_number: int) -> list[int]:
+    factor = _find_smallest_prime(positive_number)
+    reminder = positive_number / factor
     if reminder <= 1:
         return [factor]
     return [*[factor], *get_prime_factors_for(reminder)]
 
 
-def find_smallest_prime(number: int) -> int:
+def _check_if_it_is_positive(number):
+    if number < 1:
+        raise Exception("Only positive numbers are allowed")
+
+
+def _find_smallest_prime(number: int) -> int:
     if number == 1:
         return 1
     factor = 2
