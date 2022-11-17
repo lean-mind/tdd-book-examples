@@ -16,6 +16,7 @@ assertpy = "*"
 hypothesis = "*"
 autopep8 = "*"
 behave = "*"
+mockito = "*"
 
 [requires]
 python_version = "3.10"
