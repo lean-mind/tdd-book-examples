@@ -5,11 +5,10 @@ def get_prime_factors_for(number: int) -> list[int]:
     factor = 2
     while number % factor != 0:
         factor += 1
-    factors = [factor]
     reminder = number / factor
     if reminder > 1:
-        factors += get_prime_factors_for(reminder)
-    return factors
+        return [*[factor], *get_prime_factors_for(reminder)]
+    return [factor]
 
 
 def test_knows_what_is_a_primer_number():
