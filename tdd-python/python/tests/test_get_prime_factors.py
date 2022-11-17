@@ -10,10 +10,16 @@ def get_prime_factors_for(number: int) -> list[int]:
 
 
 def find_smallest_prime(number: int) -> int:
+    if number == 1:
+        return 1
     factor = 2
     while number % factor != 0:
         factor += 1
     return factor
+
+
+def test_knows_that_prime_numbers_start_with_2():
+    assert_that(get_prime_factors_for(1)).is_equal_to([1])
 
 
 def test_knows_what_is_a_primer_number():
