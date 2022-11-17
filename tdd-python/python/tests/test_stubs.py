@@ -46,27 +46,30 @@ class RepositoryStub(Repository):
 
 
 class ServiceShould(TestCase):
+    repository: RepositoryStub
+    service: Service
+    user: User
+
+    def setUp(self) -> None:
+        self.repository = RepositoryStub()
+        self.service = Service(self.repository)
+        self.user = User()
+        return super().setUp()
 
     def test_search_users_by_name_first(self):
-        repository = RepositoryStub()
-        service = Service(repository)
         a_name = "irrelevant_name"
-        user = User()
-        repository.stub_list_of_users_by_name = [user]
+        self.repository.stub_list_of_users_by_name = [self.user]
 
-        result = service.find_users(a_name)
+        result = self.service.find_users(a_name)
 
         assert_that(result).is_length(1)
-        assert_that(result).contains(user)
+        assert_that(result).contains(self.user)
 
     def test_search_users_by_surname_when_nothing_is_found_by_name(self):
-        repository = RepositoryStub()
-        service = Service(repository)
         a_surname = "irrelevant_surname"
-        user = User()
-        repository.stub_list_of_users_by_surname = [user]
+        self.repository.stub_list_of_users_by_surname = [self.user]
 
-        result = service.find_users(a_surname)
+        result = self.service.find_users(a_surname)
 
         assert_that(result).is_length(1)
-        assert_that(result).contains(user)
+        assert_that(result).contains(self.user)
