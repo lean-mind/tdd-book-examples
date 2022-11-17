@@ -52,7 +52,7 @@ class ServiceShould(TestCase):
         repository = mock(Repository())
         service = Service(repository)
         user = User()
-        
+
         when(repository).save(user).thenReturn(None)
         service.update_password(user, Password("1234"))
 
