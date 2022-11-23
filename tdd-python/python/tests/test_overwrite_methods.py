@@ -42,6 +42,7 @@ class TheService(TestCase):
     def test_searches_users_by_name_2(self):
         name = "irrelevant"
         user = User()
+
         def find_users_by_name(name: str) -> list[User]:
             return [user]
 
