@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 mysql-connector-python = "==8.0.31"
+django = "==4.1.3"
 
 [dev-packages]
 black = "*"
