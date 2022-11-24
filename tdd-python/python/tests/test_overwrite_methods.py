@@ -9,7 +9,6 @@ class User:
 
 
 class Repository:
-
     def find_users_by_name(self, name: str) -> list[User]:
         pass
 
@@ -48,10 +47,15 @@ class TheService(TestCase):
 
         def find_users_by_surname(surname: str) -> list[User]:
             return []
-        repository = type('obj', (object,), {
-            'find_users_by_name': find_users_by_name,
-            'find_users_by_surname': find_users_by_surname
-        })
+
+        repository = type(
+            "obj",
+            (object,),
+            {
+                "find_users_by_name": find_users_by_name,
+                "find_users_by_surname": find_users_by_surname,
+            },
+        )
 
         service = createService(repository)
 
@@ -67,6 +71,7 @@ class TheService(TestCase):
 
         def find_users_by_surname(surname: str) -> list[User]:
             return []
+
         repository.find_users_by_name = find_users_by_name
         repository.find_users_by_surname = find_users_by_surname
 

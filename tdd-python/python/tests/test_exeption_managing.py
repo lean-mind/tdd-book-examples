@@ -31,5 +31,6 @@ class TestFilter:
         self.filter.apply(self.empty_file)
 
     def test_should_fail_if_the_file_is_empty_3(self):
-        assert_that(self.filter.apply).raises(
-            Exception).when_called_with(self.empty_file)
+        assert_that(self.filter.apply).raises(Exception).when_called_with(
+            self.empty_file
+        )

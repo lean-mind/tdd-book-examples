@@ -9,7 +9,6 @@ class User:
 
 
 class Repository:
-
     def find_users_by_name(self, name: str) -> list[User]:
         pass
 

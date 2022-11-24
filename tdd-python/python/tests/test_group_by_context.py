@@ -2,7 +2,6 @@ from unittest import TestCase
 
 
 class TestSuiteWhenContext1(TestCase):
-
     def setUp(self) -> None:
         arrange_block_1()
         return super().setUp()
@@ -17,7 +16,6 @@ class TestSuiteWhenContext1(TestCase):
 
 
 class TestSuiteWhenContext2(TestCase):
-
     def setUp(self) -> None:
         arrange_block_2()
         return super().setUp()

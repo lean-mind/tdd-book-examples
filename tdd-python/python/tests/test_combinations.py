@@ -55,7 +55,6 @@ class Service:
 
 
 class ServiceShould(TestCase):
-
     def test_backup_premium_users_files(self):
         repository = mock(Repository())
         backup = mock(Backup())

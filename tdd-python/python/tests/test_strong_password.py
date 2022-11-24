@@ -5,10 +5,10 @@ from assertpy import assert_that
 
 def is_strong_password(password: str) -> bool:
     has_min_length = len(password) >= 6
-    contains_digits = bool(re.search(r'\d', password))
-    contains_lower_case = bool(re.search(r'[a-z]', password))
-    contains_upper_case = bool(re.search(r'[A-Z]', password))
-    contains_under_score = bool(re.search(r'[\_]', password))
+    contains_digits = bool(re.search(r"\d", password))
+    contains_lower_case = bool(re.search(r"[a-z]", password))
+    contains_upper_case = bool(re.search(r"[A-Z]", password))
+    contains_under_score = bool(re.search(r"[\_]", password))
     is_strong_password = (
         has_min_length
         and contains_digits
@@ -20,7 +20,6 @@ def is_strong_password(password: str) -> bool:
 
 
 class ThePasswordStrengthValidator(TestCase):
-
     def test_consider_a_password_to_be_strong_when_all_requirements_are_met(self):
         assert_that(is_strong_password("1234abcdABCD_")).is_true()
 

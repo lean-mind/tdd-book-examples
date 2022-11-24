@@ -8,11 +8,13 @@ class CasesWithDiagnoses:
     _cases: list[dict]
 
     def patient_name_given_diagnosis_location(self, location_name: str) -> str:
-        diagnostic_id = [d for d in self._diagnoses if d.get(
-            'location') == location_name][0].get('id')
-        associated_case = [c for c in self._cases if c.get(
-            'diagnostic_id') == diagnostic_id][0]
-        return associated_case.get('patient_name', 'name_not_found')
+        diagnostic_id = [
+            d for d in self._diagnoses if d.get("location") == location_name
+        ][0].get("id")
+        associated_case = [
+            c for c in self._cases if c.get("diagnostic_id") == diagnostic_id
+        ][0]
+        return associated_case.get("patient_name", "name_not_found")
 
     def cases(self) -> list[dict]:
         return self._cases
@@ -49,7 +51,7 @@ class CasesWithDiagnosesBuilder:
             "location": location_name,
             "system": "irrelevant_system",
             "origin": "irrelevant_origin",
-            "specie": "irrelevant_specie"
+            "specie": "irrelevant_specie",
         }
 
     @staticmethod
@@ -57,8 +59,8 @@ class CasesWithDiagnosesBuilder:
         return {
             "id": id,
             "patient_name": patient_name,
-            "diagnostic_id": diagnostic.get('id'),
-            "diagnostic_name": diagnostic.get('name'),
+            "diagnostic_id": diagnostic.get("id"),
+            "diagnostic_name": diagnostic.get("name"),
             "public_notes": [],
-            "private_notes": []
+            "private_notes": [],
         }

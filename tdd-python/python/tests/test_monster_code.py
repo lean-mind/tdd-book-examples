@@ -21,12 +21,7 @@ customer = Customer()
 
 class MonsterClass:
     def execute_action(
-        self,
-        arg1: str,
-        arg2: str,
-        arg3: str,
-        arg4: str,
-        panic_mode: bool
+        self, arg1: str, arg2: str, arg3: str, arg4: str, panic_mode: bool
     ) -> None:
         # ... 1000 lines of code ...
         self._save_customer(customer)
@@ -34,9 +29,7 @@ class MonsterClass:
 
     def _save_customer(self, customer: Customer) -> None:
         db = mysql.connector.connect(
-            host="localhost",
-            user="<your_username>",
-            password="<your_password>"
+            host="localhost", user="<your_username>", password="<your_password>"
         )
         cursor = db.cursor()
         cursor.execute(
@@ -51,12 +44,7 @@ class MonsterClassForTests(MonsterClass):
     saved_data: Data
 
     def execute_action(
-        self,
-        arg1: str,
-        arg2: str,
-        arg3: str,
-        arg4: str,
-        panic_mode: bool
+        self, arg1: str, arg2: str, arg3: str, arg4: str, panic_mode: bool
     ) -> None:
         # ... 1000 lines of code ...
         self._save_data_and_many_more_things(data)

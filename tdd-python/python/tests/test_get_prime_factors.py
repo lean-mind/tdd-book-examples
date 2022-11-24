@@ -46,6 +46,4 @@ def test_orders_the_prime_factors_from_the_smallest_to_the_biggest():
 
 
 def test_only_accepts_positive_numbers():
-    assert_that(get_prime_factors_for).raises(
-        Exception
-    ).when_called_with(-5)
+    assert_that(get_prime_factors_for).raises(Exception).when_called_with(-5)

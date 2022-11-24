@@ -4,8 +4,8 @@ from tests.fixtures.diagnoses_builder import CasesWithDiagnosesBuilder
 
 
 class TestDiagnosesExample(TestCase):
-    _component_content = ''
-    _table_content = ''
+    _component_content = ""
+    _table_content = ""
     cases = []
     diagnoses = []
 
@@ -53,7 +53,8 @@ class TestDiagnosesExample(TestCase):
     def simulate_click_on_filter_checkbox(self, search_criteria: str) -> None:
         component_values = self._component_content.split(",")
         self._table_content += "".join(
-            [c for c in component_values if search_criteria in c])
+            [c for c in component_values if search_criteria in c]
+        )
 
     def wait_for_cases_table_to_update_results(self) -> str:
         return self._table_content

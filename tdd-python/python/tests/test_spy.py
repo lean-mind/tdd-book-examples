@@ -17,7 +17,6 @@ class User:
 
 
 class Repository:
-
     def save(self, user: User) -> None:
         pass
 
@@ -41,7 +40,6 @@ class RepositorySpy(Repository):
 
 
 class ServiceShould(TestCase):
-
     def test_save_user_through_the_repository(self):
         repository = RepositorySpy()
         service = Service(repository)

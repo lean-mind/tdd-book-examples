@@ -22,7 +22,6 @@ class User:
 
 
 class Repository:
-
     def save(self, user: User) -> None:
         pass
 

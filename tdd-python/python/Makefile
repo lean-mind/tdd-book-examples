@@ -24,3 +24,7 @@ tests:  ## Locally run unit tests
 .PHONY: bdd-tests
 bdd-tests:  ## Locally run Behave (BDD) tests
 	@PYTHONPATH=src PIPENV_VERBOSITY=-1 pipenv run behave
+
+.PHONY: run-django
+run-django: ## Locally run Django
+	@python manage.py runserver

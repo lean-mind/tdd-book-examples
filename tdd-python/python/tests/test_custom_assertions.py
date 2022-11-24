@@ -17,7 +17,6 @@ def assert_that_list(series: list[float]) -> ListMatchers:
 
 
 class TestListMatchers(TestCase):
-
     def test_edge_cases(self):
         assert_that_list([1]).is_exactly(1)
         assert_that_list([]).is_exactly()
