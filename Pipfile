@@ -21,7 +21,7 @@ autopep8 = "*"
 behave = "*"
 mockito = "*"
 selenium = "==4.6.0"
-webdriver-manager = "*"
+webdriver_manager = "*"
 
 [requires]
 python_version = "3.10"

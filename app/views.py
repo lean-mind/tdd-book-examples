@@ -28,7 +28,7 @@ def csv_form(request):
     if request.method == 'POST':
         file = request.FILES.get('file', {})
         if file:
-            lines = file.read().split(b'\r\n')
+            lines = file.read().split(b'\n')
             lines = [line.decode("utf-8") for line in lines]
             filtered_lines = CsvFilter().apply(lines)
             header = lines[0]
