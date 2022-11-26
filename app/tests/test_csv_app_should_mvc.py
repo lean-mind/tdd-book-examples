@@ -1,14 +1,18 @@
 import os
 import csv
 from pathlib import Path
+from django.http import HttpResponse
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import encode_multipart, RequestFactory
-from views import csv_form
+from app.views import csv_form
+from app import views
 from assertpy import assert_that
+from mockito import when, mock, unstub
 
 
 class CsvFilterAppShould(StaticLiveServerTestCase):
+    # Same lines as before
     @classmethod
     def setUpClass(self):
         super().setUpClass()
@@ -18,6 +22,7 @@ class CsvFilterAppShould(StaticLiveServerTestCase):
     def tearDownClass(self):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
+        unstub()
         super().tearDownClass()
 
     def test_display_lines_after_filtering_csv_file(self):
@@ -43,6 +48,24 @@ class CsvFilterAppShould(StaticLiveServerTestCase):
             data=content
         )
         page_source = csv_form(request).content.decode("utf-8")
+
+        assert_that(page_source).contains(lines[0])
+        assert_that(page_source).contains(lines[1])
+        assert_that(page_source).does_not_contain(lines[2])
+
+    def test_filters_csv_file(self):
+        lines = [
+            "Num_factura,Fecha,Bruto,Neto,IVA,IGIC,Concepto,CIF_cliente,NIF_cliente",
+            "1,02/05/2019,1000,810,19,,ACER Laptop,B76430134,",
+            "2,03/12/2019,1000,2000,19,8,Lenovo Laptop,,78544372A"
+        ]
+        self._create_csv(lines)
+        request = mock()
+
+        when(views).csv_form(request).thenReturn(
+            "".join([lines[0], lines[1]])
+        )
+        page_source = views.csv_form(request)
 
         assert_that(page_source).contains(lines[0])
         assert_that(page_source).contains(lines[1])
