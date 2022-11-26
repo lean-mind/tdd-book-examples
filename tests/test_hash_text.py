@@ -2,7 +2,7 @@ from hypothesis import given, assume
 from hypothesis.strategies import text
 from assertpy import assert_that
 
-from src.hash_text import calculate_hash
+from app.src.hash_text import calculate_hash
 
 
 @given(text())

@@ -1,7 +1,7 @@
 from typing import List
 from unittest import TestCase
 from assertpy import assert_that
-from src.csv_filter import CsvFilter
+from app.src.csv_filter import CsvFilter
 
 
 class CsvFilterShould(TestCase):

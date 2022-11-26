@@ -5,6 +5,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "django-insecure-x*7zr!wzpxxur=c6362bsx)f6sj%#hrjjh^gmz7jjoywhqr2uv"
 
+USERNAME = "admin"
+PASSWORD = "admin"
+LOGIN_URL = "login"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -35,6 +38,13 @@ TEMPLATES = [
         },
     },
 ]
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 WSGI_APPLICATION = "app.wsgi.application"
 

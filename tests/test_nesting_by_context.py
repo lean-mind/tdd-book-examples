@@ -1,4 +1,3 @@
-from assertpy import assert_that
 from unittest import TestCase
 
 

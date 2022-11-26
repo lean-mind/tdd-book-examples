@@ -1,22 +1,10 @@
-"""app URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.urls import path, include
+from django.urls import path
 
 from app import views
+from app.settings import LOGIN_URL
 
 urlpatterns = [
     path("", views.home_page, name="home_page"),
+    path(LOGIN_URL, views.login, name="login"),
+    path("csv_form", views.csv_form, name="csv_form"),
 ]

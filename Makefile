@@ -17,14 +17,20 @@ lint:   ## Lint the project files
 	@PIPENV_VERBOSITY=-1 pipenv run flake8 ./
 
 .PHONY: tests
-tests:  ## Locally run unit tests
-	@PYTHONPATH=src PIPENV_VERBOSITY=-1 pipenv run pytest -v tests/
+tests: unit-tests django-tests bdd-tests  ## Locally run all tests
 
+.PHONY: unit-tests
+unit-tests:  ## Locally run unit tests
+	@PYTHONPATH=app PIPENV_VERBOSITY=-1 pipenv run pytest -v tests/
+
+.PHONY: django-tests
+django-tests:  ## Locally run Selenium Django tests
+	@PYTHONPATH=app PIPENV_VERBOSITY=-1 pipenv run ./manage.py test app.tests
 
 .PHONY: bdd-tests
 bdd-tests:  ## Locally run Behave (BDD) tests
-	@PYTHONPATH=src PIPENV_VERBOSITY=-1 pipenv run behave
+	@PYTHONPATH=app PIPENV_VERBOSITY=-1 pipenv run behave
 
 .PHONY: run-django
 run-django: ## Locally run Django
-	@python manage.py runserver
+	@PIPENV_VERBOSITY=-1 pipenv run python manage.py runserver

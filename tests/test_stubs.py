@@ -24,11 +24,11 @@ class Service:
 
     def find_users(self, name: str) -> list[User]:
         users_by_name = self._repository.find_users_by_name(name)
-        if users_by_name != None and len(users_by_name) > 0:
+        if users_by_name is not None and len(users_by_name) > 0:
             return users_by_name
         else:
             users_by_surname = self._repository.find_users_by_surname(name)
-            if users_by_surname != None and len(users_by_surname) > 0:
+            if users_by_surname is not None and len(users_by_surname) > 0:
                 return users_by_surname
         return []
 
