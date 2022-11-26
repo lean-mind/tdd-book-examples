@@ -1,27 +1,22 @@
 import os
 import csv
 from pathlib import Path
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test.client import encode_multipart, RequestFactory
-from app.views import csv_form
-from app import views
+from django.test.client import encode_multipart
 from assertpy import assert_that
-from mockito import when, mock, unstub
 
 
-class CsvFilterAppShould(StaticLiveServerTestCase):
-    # Same lines as before
+class CsvFilterAppShould(TestCase):
     @classmethod
     def setUpClass(self):
         super().setUpClass()
-        self.file_path = str(Path('sample_mvc.csv').resolve())
+        self.file_path = str(Path('sample.csv').resolve())
 
     @classmethod
     def tearDownClass(self):
         if os.path.exists(self.file_path):
             os.remove(self.file_path)
-        unstub()
         super().tearDownClass()
 
     def test_display_lines_after_filtering_csv_file(self):
@@ -41,30 +36,12 @@ class CsvFilterAppShould(StaticLiveServerTestCase):
         boundary = "----WebKitFormBoundaryucMox1afkfmW2cdo"
         content = encode_multipart(boundary, form_data)
 
-        request = RequestFactory().post(
-            f"{self.live_server_url}/csv_form",
-            content_type=f"multipart/form-data; boundary={boundary}",
-            data=content
+        response = self.client.post(
+            '/csv_form',
+            data=content,
+            content_type=f"multipart/form-data; boundary={boundary}"
         )
-        page_source = csv_form(request).content.decode("utf-8")
-
-        assert_that(page_source).contains(lines[0])
-        assert_that(page_source).contains(lines[1])
-        assert_that(page_source).does_not_contain(lines[2])
-
-    def test_filters_csv_file(self):
-        lines = [
-            "Num_factura,Fecha,Bruto,Neto,IVA,IGIC,Concepto,CIF_cliente,NIF_cliente",
-            "1,02/05/2019,1000,810,19,,ACER Laptop,B76430134,",
-            "2,03/12/2019,1000,2000,19,8,Lenovo Laptop,,78544372A"
-        ]
-        self._create_csv(lines)
-        request = mock()
-
-        when(views).csv_form(request).thenReturn(
-            "".join([lines[0], lines[1]])
-        )
-        page_source = views.csv_form(request)
+        page_source = response.content.decode("utf-8")
 
         assert_that(page_source).contains(lines[0])
         assert_that(page_source).contains(lines[1])
