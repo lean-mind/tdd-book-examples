@@ -1,6 +1,6 @@
 {% extends "./base.html" %} {% block content %}
 <form method="post" action="{% url 'csv_form' %}" enctype="multipart/form-data">
-  <label>File</label><input name="file" type="file" /><br />
+  <label>File</label><input name="file" id="file_input" type="file" /><br />
   <input id="upload" type="submit" value="upload" />
 </form>
 {% if file_content %}

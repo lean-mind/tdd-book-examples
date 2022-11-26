@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from app import settings
+from app.src.csv_filter import CsvFilter
 
 
 def home_page(request):
@@ -27,9 +28,11 @@ def csv_form(request):
     if request.method == 'POST':
         file = request.FILES.get('file', {})
         if file:
-            lines = file.read().split(b'\n')
+            lines = file.read().split(b'\r\n')
             lines = [line.decode("utf-8") for line in lines]
-            content = "".join(lines)
+            filtered_lines = CsvFilter().apply(lines)
+            header = lines[0]
+            content = "".join([header] + filtered_lines)
             vars = {'file_content': content}
             return render(request, 'csv_form.html', context=vars)
     return redirect('/?error')
