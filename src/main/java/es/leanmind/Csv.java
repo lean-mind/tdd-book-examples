@@ -15,7 +15,8 @@ public class Csv {
         var oneTaxIsPopulated = iva.isEmpty() || igic.isEmpty();
         var bothTaxesAreNotPopulated = !(iva.isEmpty() && igic.isEmpty());
         var taxIsDecimal = iva.matches("\\d+") || igic.matches("\\d+");
-        if (oneTaxIsPopulated && bothTaxesAreNotPopulated && taxIsDecimal) {
+        var taxFieldsAreMutuallyExclusive = oneTaxIsPopulated && bothTaxesAreNotPopulated && taxIsDecimal;
+        if (taxFieldsAreMutuallyExclusive) {
             correctLines.add(invoiceLine);
         }
         return correctLines;
