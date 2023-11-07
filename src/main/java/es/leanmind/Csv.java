@@ -5,8 +5,9 @@ import java.util.List;
 
 public class Csv {
     public static List<String> filter(List<String> lines) {
-        var result = new ArrayList<String>();
-        result.add(lines.get(0));
+        var header = lines.get(0);
+        var correctLines = new ArrayList<String>();
+        correctLines.add(header);
         var invoiceLine = lines.get(1);
         var fields = invoiceLine.split(",");
         var iva = fields[4];
@@ -14,8 +15,8 @@ public class Csv {
         var oneTaxIsPopulated = iva.isEmpty() || igic.isEmpty();
         var bothTaxesAreNotPopulated = !(iva.isEmpty() && igic.isEmpty());
         if (oneTaxIsPopulated && bothTaxesAreNotPopulated) {
-            result.add(invoiceLine);
+            correctLines.add(invoiceLine);
         }
-        return result;
+        return correctLines;
     }
 }
