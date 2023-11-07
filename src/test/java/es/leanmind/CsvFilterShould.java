@@ -6,7 +6,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class CsvFilterShould {
+class CsvFilterShould {
 
     @Test
     void test_allow_for_correct_lines_only() {
