@@ -15,10 +15,9 @@ public class Csv {
         var igicField = fields[igicFieldIndex];
         var decimalRegex = "\\d+(\\.\\d+)?";
         var taxFieldsAreMutuallyExclusive =
-                (ivaField.matches(decimalRegex) ||
-                        igicField.matches(decimalRegex)) &&
-                        (!(ivaField.matches(decimalRegex)
-                                && igicField.matches(decimalRegex)));
+                ((ivaField.matches(decimalRegex)
+                        || igicField.matches(decimalRegex))
+                        && (ivaField.isBlank() || igicField.isBlank()));
         if (taxFieldsAreMutuallyExclusive) {
             result.add(invoiceLine);
         }
