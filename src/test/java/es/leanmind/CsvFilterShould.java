@@ -49,4 +49,14 @@ class CsvFilterShould {
 
         assertThat(correctLines).isEqualTo(List.of(headerLine));
     }
+
+    @Test
+    void test_exclude_lines_with_both_taxes_even_with_wrong_format() {
+        var wrongIvaType = "XYZ";
+        var invoiceLine = "1,02/05/2019,1000,810," + wrongIvaType + ",12,ACER Laptop,B76430134,";
+
+        var correctLines = Csv.filter(List.of(headerLine, invoiceLine));
+
+        assertThat(correctLines).isEqualTo(List.of(headerLine));
+    }
 }
