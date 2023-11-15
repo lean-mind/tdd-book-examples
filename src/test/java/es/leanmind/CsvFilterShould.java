@@ -8,7 +8,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class CsvFilterShould {
     @Test
-    void foo() {
-        assertThat(Csv.filter(List.of())).isEqualTo(List.of());
+    void allow_for_correct_lines_only() {
+        var headerLine = "Num_factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente";
+        var invoiceLine = "1,02/05/2019,1000,810,19,,ACER Laptop,B76430134,";
+        var incorrectLine = "A,line,missing,fields,and,wrong,formats,";
+
+        var correctLines = Csv.filter(List.of(headerLine, invoiceLine, incorrectLine));
+
+        assertThat(correctLines).isEqualTo(List.of(headerLine, invoiceLine));
     }
 }
