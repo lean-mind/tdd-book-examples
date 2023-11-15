@@ -11,8 +11,9 @@ public class Csv {
         var fields = invoiceLine.split(",");
         var iva = fields[4];
         var igic = fields[5];
-        boolean taxFieldsAreMutuallyExclusive = (iva.isBlank() || igic.isBlank())
-                && (!(iva.isBlank() && igic.isBlank()));
+        boolean taxFieldsAreMutuallyExclusive =
+                (iva.isBlank() || igic.isBlank())
+                        && (!(iva.isBlank() && igic.isBlank()));
         if (taxFieldsAreMutuallyExclusive) {
             result.add(invoiceLine);
         }
