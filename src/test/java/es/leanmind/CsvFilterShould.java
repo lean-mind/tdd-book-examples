@@ -24,18 +24,18 @@ class CsvFilterShould {
     void exclude_lines_with_both_tax_fields_populated() {
         var iva = "19";
         var igic = "8";
-        var invoiceLine = "1,02/05/2019,1000,810," + iva + "," + igic + ",ACER Laptop,B76430134,";
+        var incorrectLine = "1,02/05/2019,1000,810," + iva + "," + igic + ",ACER Laptop,B76430134,";
 
-        var correctLines = Csv.filter(List.of(headerLine, invoiceLine));
+        var correctLines = Csv.filter(List.of(headerLine, incorrectLine));
 
         assertThat(correctLines).isEqualTo(List.of(headerLine));
     }
 
     @Test
     void at_least_one_tax_is_required() {
-        var invoiceLine = "1,02/05/2019,1000,810,,,ACER Laptop,B76430134,";
+        var incorrectLine = "1,02/05/2019,1000,810,,,ACER Laptop,B76430134,";
 
-        var correctLines = Csv.filter(List.of(headerLine, invoiceLine));
+        var correctLines = Csv.filter(List.of(headerLine, incorrectLine));
 
         assertThat(correctLines).isEqualTo(List.of(headerLine));
     }
