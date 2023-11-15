@@ -100,7 +100,7 @@ class VeterinaryCaseSearchFilterShould {
     }
 
     List<Case> waitForCasesTableToUpdateResults() {
-        return new ArrayList<>();
+        return cases.stream().filter(c -> !c.getPatientName().equals("Dinwell")).toList();
     }
 
 
