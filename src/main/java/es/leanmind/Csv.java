@@ -10,12 +10,12 @@ public class Csv {
         var invoiceLine = lines.get(1);
         var fields = invoiceLine.split(",");
         int ivaFieldIndex = 4;
-        var iva = fields[ivaFieldIndex];
+        var ivaField = fields[ivaFieldIndex];
         int igicFieldIndex = 5;
-        var igic = fields[igicFieldIndex];
+        var igicField = fields[igicFieldIndex];
         boolean taxFieldsAreMutuallyExclusive =
-                (iva.isBlank() || igic.isBlank())
-                        && (!(iva.isBlank() && igic.isBlank()));
+                (ivaField.isBlank() || igicField.isBlank())
+                        && (!(ivaField.isBlank() && igicField.isBlank()));
         if (taxFieldsAreMutuallyExclusive) {
             result.add(invoiceLine);
         }
