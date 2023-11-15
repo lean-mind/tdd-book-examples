@@ -39,4 +39,14 @@ class CsvFilterShould {
 
         assertThat(correctLines).isEqualTo(List.of(headerLine));
     }
+
+    @Test
+    void exclude_lines_with_non_decimal_tax_fields() {
+        var wrongTaxType = "XYZ";
+        var invoiceLine = "1,02/05/2019,1000,810," + wrongTaxType + ",,ACER Laptop,B76430134,";
+
+        var correctLines = Csv.filter(List.of(headerLine, invoiceLine));
+
+        assertThat(correctLines).isEqualTo(List.of(headerLine));
+    }
 }
