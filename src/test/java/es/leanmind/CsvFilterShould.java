@@ -11,7 +11,7 @@ class CsvFilterShould {
 
     public final String headerLine = "Num_factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente";
     public final String emptyField = "";
-    public final List<String> emptyFile = List.of(headerLine);
+    public final List<String> noInvoiceLines = List.of(headerLine);
 
     @Test
     void allow_for_correct_lines_only() {
@@ -35,7 +35,7 @@ class CsvFilterShould {
 
         var correctLines = Csv.filter(invoiceLines);
 
-        assertThat(correctLines).isEqualTo(emptyFile);
+        assertThat(correctLines).isEqualTo(noInvoiceLines);
     }
 
     @Test
@@ -44,7 +44,7 @@ class CsvFilterShould {
 
         var correctLines = Csv.filter(invoiceLines);
 
-        assertThat(correctLines).isEqualTo(emptyFile);
+        assertThat(correctLines).isEqualTo(noInvoiceLines);
     }
 
     @Test
@@ -54,7 +54,7 @@ class CsvFilterShould {
 
         var correctLines = Csv.filter(invoiceLines);
 
-        assertThat(correctLines).isEqualTo(emptyFile);
+        assertThat(correctLines).isEqualTo(noInvoiceLines);
     }
 
     @Test
@@ -65,7 +65,7 @@ class CsvFilterShould {
 
         var correctLines = Csv.filter(invoiceLines);
 
-        assertThat(correctLines).isEqualTo(emptyFile);
+        assertThat(correctLines).isEqualTo(noInvoiceLines);
     }
 
     private ArrayList<String> fileWithOneInvoiceLineHaving(String ivaTax, String igicTax) {
