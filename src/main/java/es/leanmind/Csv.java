@@ -13,9 +13,12 @@ public class Csv {
         var ivaField = fields[ivaFieldIndex];
         int igicFieldIndex = 5;
         var igicField = fields[igicFieldIndex];
-        boolean taxFieldsAreMutuallyExclusive =
-                (ivaField.isBlank() || igicField.isBlank())
-                        && (!(ivaField.isBlank() && igicField.isBlank()));
+        var decimalRegex = "\\d+(\\.\\d+)?";
+        var taxFieldsAreMutuallyExclusive =
+                (ivaField.matches(decimalRegex) ||
+                        igicField.matches(decimalRegex)) &&
+                        (!(ivaField.matches(decimalRegex)
+                                && igicField.matches(decimalRegex)));
         if (taxFieldsAreMutuallyExclusive) {
             result.add(invoiceLine);
         }
