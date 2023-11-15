@@ -9,8 +9,10 @@ public class Csv {
         result.add(lines.get(0));
         var invoiceLine = lines.get(1);
         var fields = invoiceLine.split(",");
-        var iva = fields[4];
-        var igic = fields[5];
+        int ivaFieldIndex = 4;
+        var iva = fields[ivaFieldIndex];
+        int igicFieldIndex = 5;
+        var igic = fields[igicFieldIndex];
         boolean taxFieldsAreMutuallyExclusive =
                 (iva.isBlank() || igic.isBlank())
                         && (!(iva.isBlank() && igic.isBlank()));
