@@ -11,7 +11,8 @@ public class Csv {
         var fields = invoiceLine.split(",");
         var iva = fields[4];
         var igic = fields[5];
-        if (iva.isBlank() || igic.isBlank()) {
+        if ((iva.isBlank() || igic.isBlank())
+                && (!(iva.isBlank() && igic.isBlank()))) {
             result.add(invoiceLine);
         }
         return result;
