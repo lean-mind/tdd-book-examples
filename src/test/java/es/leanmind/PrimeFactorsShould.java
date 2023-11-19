@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PrimeFactorsShould {
     public static List<Integer> getPrimeFactorsFor(int number) {
@@ -48,5 +49,10 @@ public class PrimeFactorsShould {
     @Test
     void knows_that_prime_numbers_start_with_2() {
         assertThat(getPrimeFactorsFor(1)).isEqualTo(List.of(1));
+    }
+
+    @Test
+    void only_accepts_positive_numbers() {
+        assertThrows(IllegalArgumentException.class, () -> getPrimeFactorsFor(-5));
     }
 }
