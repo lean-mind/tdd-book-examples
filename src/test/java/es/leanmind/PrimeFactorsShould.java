@@ -10,8 +10,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class PrimeFactorsShould {
     public static List<Integer> getPrimeFactorsFor(int number) {
         var factor = 2;
-        if (number % factor != 0) {
-            factor = 3;
+        while (number % factor != 0) {
+            factor++;
         }
         var factors = new ArrayList<Integer>();
         factors.add(factor);
