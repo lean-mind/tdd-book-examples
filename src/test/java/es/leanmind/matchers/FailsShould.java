@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class FailsShould {
 
     private ArchiveFilter filter;
@@ -16,13 +18,10 @@ public class FailsShould {
     }
 
     @Test
-    public void should_fail_if_the_file_is_empty() {
-        try {
+    void should_fail_if_the_file_is_empty() {
+        assertThrows(IllegalFileException.class, () -> {
             filter.apply(emptyFile);
-        } catch (Exception e) {
-            // Se espera una IllegalFileException,
-            // por lo que el test debe pasar si se lanza.
-        }
+        });
     }
 
 }
