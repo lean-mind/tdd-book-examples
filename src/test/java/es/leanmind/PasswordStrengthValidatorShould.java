@@ -19,4 +19,9 @@ public class PasswordStrengthValidatorShould {
     void fail_when_the_password_is_too_short() {
         assertThat(isStrongPassword("1aA_")).isFalse();
     }
+
+    @Test
+    void fail_when_the_password_does_not_contain_any_digit() {
+        assertThat(isStrongPassword("aaaaaaA_")).isFalse();
+    }
 }
