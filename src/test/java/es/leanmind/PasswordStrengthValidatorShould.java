@@ -7,7 +7,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class PasswordStrengthValidatorShould {
     public static boolean isStrongPassword(String password) {
-        return true;
+        return password.length() >= 6;
     }
 
     @Test
