@@ -11,6 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PrimeFactorsShould {
     public static List<Integer> getPrimeFactorsFor(int number) {
+        if (number < 1) {
+            throw new IllegalArgumentException("Only positive numbers are allowed");
+        }
         var prime = findSmallestPrime(number);
         var remainder = number / prime;
         if (remainder <= 1) {
