@@ -10,17 +10,22 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class PrimeFactorsShould {
     public static List<Integer> getPrimeFactorsFor(int number) {
-        var factor = 2;
+        var prime = findSmallestPrime(number);
+        var remainder = number / prime;
+        if (remainder <= 1) {
+            return List.of(prime);
+        }
+        return Stream.of(List.of(prime), getPrimeFactorsFor(remainder))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+    }
+
+    private static int findSmallestPrime(int number) {
+        int factor = 2;
         while (number % factor != 0) {
             factor++;
         }
-        var remainder = number / factor;
-        if (remainder <= 1) {
-            return List.of(factor);
-        }
-        return Stream.of(List.of(factor), getPrimeFactorsFor(remainder))
-                .flatMap(List::stream)
-                .collect(Collectors.toList());
+        return factor;
     }
 
     @Test
