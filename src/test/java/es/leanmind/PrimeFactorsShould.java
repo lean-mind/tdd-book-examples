@@ -2,8 +2,9 @@ package es.leanmind;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -13,13 +14,13 @@ public class PrimeFactorsShould {
         while (number % factor != 0) {
             factor++;
         }
-        var factors = new ArrayList<Integer>();
-        factors.add(factor);
         var remainder = number / factor;
         if (remainder > 1) {
-            factors.addAll(getPrimeFactorsFor(remainder));
+            return Stream.of(List.of(factor), getPrimeFactorsFor(remainder))
+                    .flatMap(List::stream)
+                    .collect(Collectors.toList());
         }
-        return factors;
+        return List.of(factor);
     }
 
     @Test
