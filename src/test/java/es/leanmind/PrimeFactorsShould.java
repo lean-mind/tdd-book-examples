@@ -14,7 +14,7 @@ public class PrimeFactorsShould {
         factors.add(factor);
         var remainder = number / factor;
         if (remainder > 1) {
-            factors.add(factor);
+            factors.addAll(getPrimeFactorsFor(remainder));
         }
         return factors;
     }
