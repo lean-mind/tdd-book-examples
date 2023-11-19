@@ -28,5 +28,6 @@ public class PrimeFactorsShould {
         assertThat(getPrimeFactorsFor(2 * 2)).isEqualTo(List.of(2, 2));
         assertThat(getPrimeFactorsFor(2 * 2 * 2)).isEqualTo(List.of(2, 2, 2));
         assertThat(getPrimeFactorsFor(3)).isEqualTo(List.of(3));
+        assertThat(getPrimeFactorsFor(5 * 5)).isEqualTo(List.of(5, 5));
     }
 }
