@@ -43,4 +43,9 @@ public class PrimeFactorsShould {
     void orders_the_prime_factors_from_the_smallest_to_the_biggest() {
         assertThat(getPrimeFactorsFor(5 * 7 * 11 * 3)).isEqualTo(List.of(3, 5, 7, 11));
     }
+
+    @Test
+    void knows_that_prime_numbers_start_with_2() {
+        assertThat(getPrimeFactorsFor(1)).isEqualTo(List.of(1));
+    }
 }
