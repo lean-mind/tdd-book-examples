@@ -15,12 +15,12 @@ public class PrimeFactorsShould {
             factor++;
         }
         var remainder = number / factor;
-        if (remainder > 1) {
-            return Stream.of(List.of(factor), getPrimeFactorsFor(remainder))
-                    .flatMap(List::stream)
-                    .collect(Collectors.toList());
+        if (remainder <= 1) {
+            return List.of(factor);
         }
-        return List.of(factor);
+        return Stream.of(List.of(factor), getPrimeFactorsFor(remainder))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 
     @Test
