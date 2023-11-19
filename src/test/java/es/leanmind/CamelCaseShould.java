@@ -3,15 +3,17 @@ package es.leanmind;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CamelCaseShould {
     public static String toCamelCase(String text) {
-        var words = text.split("/[ ,_-]/g");
-        var word = words[0];
-        word = word.substring(0, 1).toUpperCase() + word.substring(1);
-        words[0] = word;
-        return String.join("", words);
+        return Stream
+                .of(text.split("/[ ,_-]/g"))
+                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                .collect(Collectors.joining(""));
     }
 
     @Test
