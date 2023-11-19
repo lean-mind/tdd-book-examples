@@ -14,4 +14,9 @@ public class PasswordStrengthValidatorShould {
     void consider_a_password_to_be_strong_when_all_requirements_are_met() {
         assertThat(isStrongPassword("1234abcdABCD_")).isTrue();
     }
+
+    @Test
+    void fail_when_the_password_is_too_short() {
+        assertThat(isStrongPassword("1aA_")).isFalse();
+    }
 }
