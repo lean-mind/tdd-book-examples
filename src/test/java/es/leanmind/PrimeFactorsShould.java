@@ -21,7 +21,8 @@ public class PrimeFactorsShould {
     }
 
     private static int findSmallestPrime(int number) {
-        int factor = 2;
+        if (number == 1) return 1;
+        var factor = 2;
         while (number % factor != 0) {
             factor++;
         }
