@@ -11,11 +11,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PrimeFactorsShould {
     public static List<Integer> getPrimeFactorsFor(int number) {
+        checkForPositiveNumber(number);
+        return primeFactors(number);
+    }
+
+    private static void checkForPositiveNumber(int number) {
         if (number < 1) {
             throw new IllegalArgumentException("Only positive numbers are allowed");
         }
-        var prime = findSmallestPrime(number);
-        var remainder = number / prime;
+    }
+
+    private static List<Integer> primeFactors(int positiveNumber) {
+        int prime = findSmallestPrime(positiveNumber);
+        int remainder = positiveNumber / prime;
         if (remainder <= 1) {
             return List.of(prime);
         }
@@ -26,7 +34,7 @@ public class PrimeFactorsShould {
 
     private static int findSmallestPrime(int number) {
         if (number == 1) return 1;
-        var factor = 2;
+        int factor = 2;
         while (number % factor != 0) {
             factor++;
         }
