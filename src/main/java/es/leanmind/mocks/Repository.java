@@ -1,7 +1,5 @@
 package es.leanmind.mocks;
 
-public class Repository {
-    public void save(User user) {
-
-    }
+public interface Repository {
+    void save(User user);
 }

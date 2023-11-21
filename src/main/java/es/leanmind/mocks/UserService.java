@@ -1,10 +1,9 @@
 package es.leanmind.mocks;
 
-// Production code:
-public class Service {
+public class UserService {
     private final Repository repository;
 
-    public Service(Repository repository) {
+    public UserService(Repository repository) {
         this.repository = repository;
     }
 
