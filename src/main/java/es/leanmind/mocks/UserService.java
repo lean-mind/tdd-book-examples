@@ -4,9 +4,11 @@ import java.util.List;
 
 public class UserService {
     private final Repository repository;
+    private final BackupService backup;
 
-    public UserService(Repository repository) {
+    public UserService(Repository repository, BackupService backup) {
         this.repository = repository;
+        this.backup = backup;
     }
 
     public void updatePassword(User user, Password password) {
@@ -25,5 +27,13 @@ public class UserService {
             }
         }
         return List.of();
+    }
+
+    public void backupPremiumUsers() {
+        for (User user : repository.findAll()) {
+            if (user.isPremium()) {
+                backup.create(user.files());
+            }
+        }
     }
 }

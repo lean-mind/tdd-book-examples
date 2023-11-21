@@ -6,27 +6,27 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class UserServiceShould {
     private Repository repository;
     private UserService service;
-    private String irrelevantName = "irrelevantName";
+    private BackupService backup;
+    private final String irrelevantName = "irrelevantName";
     private User user;
 
     @BeforeEach
     void setup() {
         repository = mock(Repository.class);
-        service = new UserService(repository);
-        user = new User();
+        backup = mock(BackupService.class);
+        service = new UserService(repository, backup);
+        user = new User(false);
     }
     @Test
     void save_user_through_repository() {
         var userRepository = new UserRepositorySpy();
-        var userService = new UserService(userRepository);
-        var user = new User();
+        var userService = new UserService(userRepository, backup);
 
         userService.updatePassword(user, new Password("1234"));
 
@@ -47,5 +47,19 @@ public class UserServiceShould {
                 .thenReturn(List.of(user));
 
         assertThat(service.findUsers(irrelevantName)).containsOnly(user);
+    }
+
+    @Test
+    void backup_premium_users_files() {
+        var repository = mock(Repository.class);
+        var backup = mock(BackupService.class);
+        var service = new UserService(repository, backup);
+        var premium = User.premium();
+        when(repository.findAll())
+                .thenReturn(List.of(premium, User.freemium()));
+
+        service.backupPremiumUsers();
+
+        verify(backup).create(premium.files());
     }
 }

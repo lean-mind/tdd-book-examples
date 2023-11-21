@@ -16,4 +16,9 @@ public class UserRepository implements Repository {
     public List<User> findUsersBySurname(String surname) {
         return null;
     }
+
+    @Override
+    public List<User> findAll() {
+        return null;
+    }
 }

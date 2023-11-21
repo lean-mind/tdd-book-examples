@@ -15,6 +15,11 @@ public class UserRepositoryStub implements Repository {
         return stubListOfUsersBySurname;
     }
 
+    @Override
+    public List<User> findAll() {
+        return null;
+    }
+
     public void save(User user) {
         // Do nothing
     }

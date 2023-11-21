@@ -17,6 +17,11 @@ public class UserRepositorySpy implements Repository {
         return null;
     }
 
+    @Override
+    public List<User> findAll() {
+        return null;
+    }
+
     public User getSavedUser() {
         return savedUser;
     }

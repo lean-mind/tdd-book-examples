@@ -8,4 +8,6 @@ public interface Repository {
     List<User> findUsersByName(String name);
 
     List<User> findUsersBySurname(String surname);
+
+    List<User> findAll();
 }
