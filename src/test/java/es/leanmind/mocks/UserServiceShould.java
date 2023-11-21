@@ -2,18 +2,18 @@ package es.leanmind.mocks;
 
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class UserServiceShould {
     @Test
     void save_user_through_repository() {
-        UserRepository userRepository = mock(UserRepository.class);
-        UserService userService = new UserService(userRepository);
-        User user = new User();
+        var userRepository = new UserRepositorySpy();
+        var userService = new UserService(userRepository);
+        var user = new User();
 
         userService.updatePassword(user, new Password("1234"));
 
-        verify(userRepository).save(user);
+        assertThat(userRepository.savedUser).isEqualTo(user);
     }
 }
