@@ -98,6 +98,10 @@ public class CsvApplicationShould {
         assertThat(submitButton).isNotNull();
         submitButton.click();
 
-        assertThat(driver.getCurrentUrl()).isNotEqualTo(Configuration.WEBURL + Configuration.LOGINURL + "?error");
+        assertThat(
+                driver.getCurrentUrl()
+        ).isNotEqualTo(
+                Configuration.WEBURL + Configuration.LOGINURL + "?error"
+        );
     }
 }
