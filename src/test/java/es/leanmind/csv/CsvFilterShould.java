@@ -1,4 +1,4 @@
-package es.leanmind;
+package es.leanmind.csv;
 
 import org.junit.jupiter.api.Test;
 

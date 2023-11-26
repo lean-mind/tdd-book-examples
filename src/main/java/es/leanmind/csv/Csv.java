@@ -1,4 +1,4 @@
-package es.leanmind;
+package es.leanmind.csv;
 
 import java.util.ArrayList;
 import java.util.List;
